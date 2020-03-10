@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/appbar"/>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ToolbarTheme"
+        android:id="@+id/appbarlayout">
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabs"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewpager"/>
+</LinearLayout>
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".MainActivity">-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rellayout2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/rellayout1">-->
+
+<!--        <androidx.viewpager.widget.ViewPager-->
+<!--            android:id="@+id/viewpager"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
+<!--    </RelativeLayout>-->
+
+<!--<RelativeLayout-->
+<!--    android:id="@+id/rellayout1"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_alignParentBottom="true">-->
+
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tablayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"-->
+<!--        app:tabSelectedTextColor="#000">-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/search_id"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--        />-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/bookmar_id"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--     />-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/wordlist_id"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--           />-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/setting_id"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--  />-->
+
+<!--    </com.google.android.material.tabs.TabLayout>-->
+
+<!--</RelativeLayout>-->
+
+<!--</RelativeLayout>-->

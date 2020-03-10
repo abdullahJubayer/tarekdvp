@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DictionaryViewP</string>
+    <string name="search">Search</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="words">Words</string>
+    <string name="setting">Setting</string>
+</resources>
