@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!-- bottom navigation or tablayout nise fixed hoye takbe-->
-        <!-- android:windowSoftInputMode="adjustNothing-->
-        
-        <activity android:name=".MainActivity"
+        <activity android:name=".DetailsActivity"></activity>
+        <!-- bottom navigation or tablayout nise fixed hoye takbe -->
+        <!-- android:windowSoftInputMode="adjustNothing -->
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
