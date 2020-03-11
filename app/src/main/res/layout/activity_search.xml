@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null">
+    android:background="#EEEEEE">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,11 +34,12 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:divider="@android:color/transparent" />
 
 

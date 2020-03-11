@@ -1,15 +1,12 @@
 package com.pixelhubllc.dictionary;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.pixelhubllc.dictionary.adapter.ViewPageAdapter;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
 
 import java.util.List;
@@ -18,9 +15,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private SwipeDisableViewPager viewPager;
     public static List<String> words;
     DatabaseAccess databaseAccess;
+    ViewPageAdapter adapter;
 
     TabItem searchTab, favouriteTab, wordsTab, settingTab;
     @Override
@@ -36,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         words = databaseAccess.getWords();
         databaseAccess.close();
 
+
         //another way for implements tablayout with viewpage adapter
 //        ViewPager viewPager;
 //        TabLayout tabLayout;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tababLayoutInit(){
-        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
+        adapter= new ViewPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new SearchFragment(this),getString(R.string.search));
         adapter.addFragment(new FavouriteFragment(),getString(R.string.bookmark));
         adapter.addFragment(new WordsFragment(),getString(R.string.words));
@@ -54,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        //To disable swipe
-     //   viewPager.beginFakeDrag();
-    //    viewPager.setSwipeable(false);
+        //To disable swipe i created a custom class
+        viewPager.setSwipeable(false);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_favourite_black);
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
         tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewpager);
+        viewPager =(SwipeDisableViewPager) findViewById(R.id.viewpager);
         searchTab = findViewById(R.id.search_id);
         favouriteTab = findViewById(R.id.bookmar_id);
         wordsTab = findViewById(R.id.wordlist_id);

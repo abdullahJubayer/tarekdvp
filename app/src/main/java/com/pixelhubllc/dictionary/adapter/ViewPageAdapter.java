@@ -1,6 +1,7 @@
-package com.pixelhubllc.dictionary;
+package com.pixelhubllc.dictionary.adapter;
 
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ViewPageAdapter extends androidx.fragment.app.FragmentPagerAdapter{
 
-    ViewPageAdapter(@NonNull FragmentManager fm) {
+    public ViewPageAdapter(@NonNull FragmentManager fm) {
         super(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
@@ -40,6 +41,10 @@ public class ViewPageAdapter extends androidx.fragment.app.FragmentPagerAdapter{
     public void addFragment(Fragment fragment, String title){
         mFragmentList.add(fragment);
         fragmentListTitle.add(title);
+    }
+
+    public int getItemPosition(Object object){
+        return getItemPosition(mFragmentList);
     }
 
 
