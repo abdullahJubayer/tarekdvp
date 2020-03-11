@@ -10,11 +10,18 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.pixelhubllc.dictionary.database.DatabaseAccess;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public static List<String> words;
+    DatabaseAccess databaseAccess;
+    LockableViewPager lockableViewPager;
 
     TabItem searchTab, favouriteTab, wordsTab, settingTab;
     @Override
@@ -24,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         tababLayoutInit();
+        lockableViewPager = new LockableViewPager(this);
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        words = databaseAccess.getWords();
+        databaseAccess.close();
 
         //another way for implements tablayout with viewpage adapter
 //        ViewPager viewPager;
@@ -36,15 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void tababLayoutInit(){
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SearchFragment(this),"Search");
-        adapter.addFragment(new FavouriteFragment(),"Bookmark");
-        adapter.addFragment(new WordsFragment(),"Words");
-        adapter.addFragment(new SettingFragment(),"Setting");
+        adapter.addFragment(new SearchFragment(this),getString(R.string.search));
+        adapter.addFragment(new FavouriteFragment(),getString(R.string.bookmark));
+        adapter.addFragment(new WordsFragment(),getString(R.string.words));
+        adapter.addFragment(new SettingFragment(),getString(R.string.setting));
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         //To disable swipe
-        viewPager.beginFakeDrag();
+     //   viewPager.beginFakeDrag();
+    //    viewPager.setSwipeable(false);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_search_black);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_favourite_black);

@@ -8,9 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -44,8 +42,7 @@
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/search_id"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    />
+                    android:layout_width="wrap_content" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/bookmar_id"
@@ -64,6 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     />
+
+
 
             </com.google.android.material.tabs.TabLayout>
 
