@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     public static List<String> words;
     DatabaseAccess databaseAccess;
-    LockableViewPager lockableViewPager;
 
     TabItem searchTab, favouriteTab, wordsTab, settingTab;
     @Override
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         tababLayoutInit();
-        lockableViewPager = new LockableViewPager(this);
+
         databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
         words = databaseAccess.getWords();
