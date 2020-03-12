@@ -73,10 +73,12 @@ public class SearchFragment extends Fragment {
                      searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), data);
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                     Log.d("TAG",data.toString());
+                    
                 } else {
                      searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), new ArrayList<Model>());
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                 }
+
             }
 
             @Override

@@ -1,25 +1,17 @@
 package com.pixelhubllc.dictionary.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.pixelhubllc.dictionary.DetailsActivity;
 import com.pixelhubllc.dictionary.R;
 import com.pixelhubllc.dictionary.model.Model;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggestionAdapter.ViewHolder> {
 
