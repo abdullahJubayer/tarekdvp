@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
+import com.pixelhubllc.dictionary.model.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WordsFragment extends Fragment {
-    List<String> words;
+    ArrayList<Model> getwords;
 
     @Nullable
     @Override
@@ -27,13 +29,13 @@ public class WordsFragment extends Fragment {
         ListView wordIndexList =(ListView) view.findViewById(R.id.wordlistid);
 
         MainActivity a = new MainActivity();
-        words = a.words;
+        getwords = a.words;
 //        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity());
 //        databaseAccess.open();
 //        List<String> words = databaseAccess.getWords();
 //        databaseAccess.close();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,words);
+        ArrayAdapter<Model> adapter = new ArrayAdapter<Model>(getActivity(), android.R.layout.simple_list_item_1,getwords);
         wordIndexList.setAdapter(adapter);
 
         return view;

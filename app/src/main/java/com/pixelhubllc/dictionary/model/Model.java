@@ -69,4 +69,5 @@ public class Model {
         this.en_words = en_words;
     }
 
+
 }

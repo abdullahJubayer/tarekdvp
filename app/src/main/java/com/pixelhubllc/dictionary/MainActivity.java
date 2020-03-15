@@ -3,12 +3,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.pixelhubllc.dictionary.adapter.ViewPageAdapter;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
+import com.pixelhubllc.dictionary.model.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private SwipeDisableViewPager viewPager;
-    public static List<String> words;
+    public ArrayList<Model> words;
     DatabaseAccess databaseAccess;
     ViewPageAdapter adapter;
 
@@ -31,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
-        words = databaseAccess.getWords();
+        words = databaseAccess.getWordsAndId();
+
+        Log.d("TAG", "onCreate: " + words.toString());
         databaseAccess.close();
 
 

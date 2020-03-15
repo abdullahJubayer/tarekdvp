@@ -61,16 +61,40 @@ public class DatabaseAccess {
      *
      * @return a List of quotes
      */
-    public ArrayList<String> getWords() {
-        ArrayList<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT en_word FROM words", null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            list.add(cursor.getString(cursor.getColumnIndex("en_word")));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return list;
+//    public ArrayList<String> getWords() {
+//        ArrayList<String> list = new ArrayList<>();
+//        Cursor cursor = database.rawQuery("SELECT en_word FROM words", null);
+//        cursor.moveToFirst();
+//        while (!cursor.isAfterLast()) {
+//            list.add(cursor.getString(cursor.getColumnIndex("en_word")));
+//            cursor.moveToNext();
+//        }
+//        cursor.close();
+//        return list;
+//    }
+//
+
+
+    public ArrayList<Model> getWordsAndId() throws SQLException {
+        ArrayList<Model> data= new ArrayList<>();
+            String query = "SELECT _id,en_word FROM words";
+            Cursor row = database.rawQuery(query, null);
+            if (row != null) {
+                row.moveToFirst();
+                while(!row.isAfterLast()){
+                    int id=row.getInt(row.getColumnIndex("_id"));
+                    String word=row.getString(row.getColumnIndex("en_word"));
+                    data.add(new Model(id,word));
+                    // do what ever you want here
+                    row.moveToNext();
+                }
+
+                row.close();
+            }
+        else
+            data=null;
+
+        return data;
     }
 
     public ArrayList<Model> fetchdatabyfilter(String inputText) throws SQLException {

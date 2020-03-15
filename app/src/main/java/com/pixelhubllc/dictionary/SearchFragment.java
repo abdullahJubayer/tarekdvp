@@ -70,7 +70,7 @@ public class SearchFragment extends Fragment {
                 String word = s.toString();
                 if (!word.isEmpty()){
                     data = databaseAccess.fetchdatabyfilter(word);
-                     searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), data);
+                    searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), data);
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                     Log.d("TAG",data.toString());
                     
