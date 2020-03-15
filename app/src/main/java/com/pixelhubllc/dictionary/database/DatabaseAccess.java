@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.pixelhubllc.dictionary.model.Model;
 
 import java.util.ArrayList;
@@ -91,6 +93,36 @@ public class DatabaseAccess {
 
                 row.close();
             }
+        }
+        else
+            data=null;
+
+        return data;
+    }
+
+    public Model fetchdatabyId(int id) throws SQLException {
+        Model data=null;
+        Cursor row = null;
+        if (id>0)  {
+            //query = "SELECT * FROM "+dbTable+" WHERE "+filtercolumn+" like '%"+inputText+"%'";
+            Log.d("iddd",String.valueOf(id));
+            String query = "SELECT * FROM words WHERE _id="+id;
+
+            row = database.rawQuery(query, null);
+
+            if (row.getCount()>0) {
+                row.moveToFirst();
+
+                String word=row.getString(row.getColumnIndex("en_word"));
+
+                String definition=row.getString(row.getColumnIndex("en_definition"));
+                String example=row.getString(row.getColumnIndex("example"));
+                String synonyms=row.getString(row.getColumnIndex("synonyms"));
+                String antonyms=row.getString(row.getColumnIndex("antonyms"));
+                data=new Model(id,word,definition, example, synonyms, antonyms);
+
+            }
+
         }
         else
             data=null;

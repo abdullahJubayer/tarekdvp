@@ -95,28 +95,22 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback( ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |
-                ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT |
-                ItemTouchHelper.RIGHT) {
+
+        //this is for remove search element by swipe
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper
+                .SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-
-                int from = viewHolder.getAdapterPosition();
-                int to = target.getAdapterPosition();
-                Collections.swap(data, from, to);
-                searchSuggestionAdapter.notifyItemMoved(from, to);
-                return true;
+                return false;
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-                data.remove(viewHolder.getAdapterPosition());
+                                data.remove(viewHolder.getAdapterPosition());
                 searchSuggestionAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
         });
-
-        itemTouchHelper.attachToRecyclerView(wordIndexList);
+                helper.attachToRecyclerView(wordIndexList);
 
         return view;
 

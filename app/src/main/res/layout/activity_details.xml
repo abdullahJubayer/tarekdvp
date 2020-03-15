@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/Definition_tv"
+                android:id="@+id/definition_tv"
                 android:text="Definition"
                 android:textSize="16sp"
                 android:layout_width="match_parent"
@@ -78,7 +78,7 @@
 
         <TextView
             android:id="@+id/example_tv"
-            android:text="Antonyms"
+            android:text="Example"
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/synon_tv"
+            android:id="@+id/synonyms_tv"
             android:text="Antonyms"
             android:textSize="16sp"
             android:layout_width="match_parent"
