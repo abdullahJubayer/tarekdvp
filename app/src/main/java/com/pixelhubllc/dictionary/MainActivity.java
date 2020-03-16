@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private SwipeDisableViewPager viewPager;
-    public ArrayList<Model> words;
+    public static ArrayList<Model> words;
     DatabaseAccess databaseAccess;
     ViewPageAdapter adapter;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         databaseAccess.open();
         words = databaseAccess.getWordsAndId();
 
-        Log.d("TAG", "onCreate: " + words.toString());
+//        Log.d("TAG_ERR", "onCreate: " + words.get(0).getEn_words().toString());
         databaseAccess.close();
 
 
