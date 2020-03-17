@@ -32,7 +32,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView wordIndexList;
     private EditText searchViewEt;
     private static final String TAG = "SearchFragment";
-    ArrayList<Model> data, nullvalue;
+    ArrayList<Model> data, history;
     SearchSuggestionAdapter searchSuggestionAdapter;
 
     Context context;
@@ -51,6 +51,8 @@ public class SearchFragment extends Fragment {
         databaseAccess = DatabaseAccess.getInstance(context);
         databaseAccess.open();
 
+//        history =databaseAccess.getSearchHistory();
+
         searchViewEt = view.findViewById(R.id.searchboxEt);
 
         ImageView clearEt = view.findViewById(R.id.clear_et);
@@ -58,6 +60,10 @@ public class SearchFragment extends Fragment {
         wordIndexList = view.findViewById(R.id.listview);
 
         wordIndexList.setLayoutManager(new LinearLayoutManager(context));
+
+  /*      searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
+        wordIndexList.setAdapter(searchSuggestionAdapter);
+        */
 
         searchViewEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,7 +81,7 @@ public class SearchFragment extends Fragment {
                     Log.d("TAG",data.toString());
 
                 } else {
-                     searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), new ArrayList<Model>());
+                    searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), new ArrayList<Model>());
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                 }
 

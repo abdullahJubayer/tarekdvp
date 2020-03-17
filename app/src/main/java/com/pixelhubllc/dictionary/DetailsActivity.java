@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
 
+import java.util.ArrayList;
+
 public class DetailsActivity extends AppCompatActivity {
     private TextView wordTv;
     private TextView definitionTv;
@@ -21,6 +23,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView antonymsTv;
     private ImageView backBtn;
     private static final String TAG = "FragmentActivity";
+    private ArrayList<Model> histories;
 
 
     @Override
@@ -41,17 +44,12 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent mIntent = getIntent();
         int id = mIntent.getIntExtra("id", 0);
-        String wordActivityConfirm = mIntent.getStringExtra("wordActivity");
-        String searchActivityConfirm = mIntent.getStringExtra("searchActivity");
         Model model=databaseAccess.fetchdatabyId(id);
 
-        //when user click back button and to confirm which is her recent activity
+        //this is for history table
+      /*  String enWords = model.getEn_words();
 
-        Log.d(TAG, "activity: " + wordActivityConfirm);
-        Toast.makeText(this, wordActivityConfirm, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, searchActivityConfirm, Toast.LENGTH_SHORT).show();
-//        String searchActivityConfirm= mIntent.getStringExtra("searchActivity");
-//        Log.d(TAG, "onCreate: " + searchActivityConfirm.toString());
+        databaseAccess.insertHistory(id, enWords);*/
 
         wordTv.setText(model.getEn_words());
         definitionTv.setText(model.getEn_defination());
@@ -62,6 +60,7 @@ public class DetailsActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onBackPressed();
 
             }
         });

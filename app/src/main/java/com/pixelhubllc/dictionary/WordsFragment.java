@@ -54,11 +54,8 @@ public class WordsFragment extends Fragment {
 
                 int word_id = words.get(position).getId();
                 Log.d("TAG, ", "onClick: " + word_id);
-                String wordactivityConfirm = "words_activity";
-                Log.d("TAG, ", "code: " + wordactivityConfirm);
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
                 intent.putExtra("id", word_id);
-                intent.putExtra("wordActivity", wordactivityConfirm);
                 startActivity(intent);
             }
         });

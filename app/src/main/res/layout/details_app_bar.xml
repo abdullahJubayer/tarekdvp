@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/details__back_arrow"
-        android:src="@drawable/ic_arrow_back_black"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_arrow_back_black" />
 
     <TextView
         android:id="@+id/details_word_Tv"

@@ -155,6 +155,46 @@ public class DatabaseAccess {
     }
 
 
+    //history insert
+    public Model insertHistory(int id,String text)
+    {
+        Model data = null;
+        if (id>0) {
+
+            database.execSQL("INSERT INTO history(id, word) VALUES(('" + id + "'),('" + text + "'))");
+            data = new Model(id, text);
+        }
+        else
+            data = null;
+            return data;
+
+    }
+
+    //history retriving
+/*    public ArrayList<Model> getSearchHistory() throws SQLException {
+        ArrayList<Model> data= new ArrayList<>();
+        String query = "SELECT _id,word FROM history";
+        Cursor row = database.rawQuery(query, null);
+        if (row != null) {
+            row.moveToFirst();
+            while(!row.isAfterLast()){
+                int id=row.getInt(row.getColumnIndex("_id"));
+                String word=row.getString(row.getColumnIndex("en_word"));
+                data.add(new Model(id,word));
+                // do what ever you want here
+                row.moveToNext();
+            }
+
+            row.close();
+        }
+        else
+            data=null;
+
+        return data;
+    }*/
+
+
+
     public Cursor getMeaning(String text)
     {
         Cursor c= database.rawQuery("SELECT en_definition,example,synonyms,antonyms FROM words WHERE en_word==UPPER('"+text+"')",null);
@@ -165,12 +205,6 @@ public class DatabaseAccess {
     {
         Cursor c= database.rawQuery("SELECT _id, en_word FROM words WHERE en_word LIKE '"+text+"%' LIMIT 40",null);
         return c;
-    }
-
-    public void  insertHistory(String text)
-    {
-        database.execSQL("INSERT INTO history(word) VALUES(UPPER('"+text+"'))");
-
     }
 
     public Cursor getHistory()

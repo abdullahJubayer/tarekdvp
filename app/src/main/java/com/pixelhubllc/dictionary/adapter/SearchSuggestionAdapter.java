@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pixelhubllc.dictionary.DetailsActivity;
 import com.pixelhubllc.dictionary.MainActivity;
 import com.pixelhubllc.dictionary.R;
+import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
 
     private Context context;
     private ArrayList<Model> words;
+    DatabaseAccess databaseAccess;
 
 
     public SearchSuggestionAdapter(Context mContext, ArrayList<Model> words) {
@@ -61,11 +63,9 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     int word_id = words.get(position).getId();
-                    String searchActivityConfirm = "search_activity";
                     Log.d("TAG, ", "onClick: " + word_id);
                     Intent intent = new Intent(context, DetailsActivity.class);
                     intent.putExtra("id", word_id);
-                    intent.putExtra("searchActivity", searchActivityConfirm);
                     context.startActivity(intent);
                 }
             });
