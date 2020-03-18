@@ -34,6 +34,16 @@ public class DetailsActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess;
         databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
+        histories = databaseAccess.getSearchHistory();
+//        databaseAccess.close();
+
+        ArrayList<String> word=new ArrayList<>();
+        for (Model model:histories){
+            word.add(model.getEn_words());
+        }
+
+        Log.d(TAG, "onCreate: " + histories.toString());
+
         wordTv = findViewById(R.id.details_word_Tv);
         definitionTv = findViewById(R.id.definition_tv);
         exampleTv = findViewById(R.id.example_tv);
@@ -47,9 +57,10 @@ public class DetailsActivity extends AppCompatActivity {
         Model model=databaseAccess.fetchdatabyId(id);
 
         //this is for history table
-      /*  String enWords = model.getEn_words();
+        String enWords = model.getEn_words();
 
-        databaseAccess.insertHistory(id, enWords);*/
+//        databaseAccess.insertHistory(id, enWords);
+
 
         wordTv.setText(model.getEn_words());
         definitionTv.setText(model.getEn_defination());

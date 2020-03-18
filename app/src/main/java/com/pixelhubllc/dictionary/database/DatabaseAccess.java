@@ -12,6 +12,7 @@ import com.pixelhubllc.dictionary.model.Model;
 import java.util.ArrayList;
 
 public class DatabaseAccess {
+    private static final String TAG = "databaseaccess";
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
     private static DatabaseAccess instance;
@@ -97,6 +98,8 @@ public class DatabaseAccess {
         return data;
     }
 
+
+
     public ArrayList<Model> fetchdatabyfilter(String inputText) throws SQLException {
         ArrayList<Model> data= new ArrayList<>();
 
@@ -155,23 +158,69 @@ public class DatabaseAccess {
     }
 
 
+//    public Model insertHistory(int id,String text)
+//    {
+//        Cursor row = null;
+//        Model data = null;
+//
+//        row = database.rawQuery("SELECT _id FROM history where _id =" + id, null);
+//        if (row==null){
+//            database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
+//            data = new Model(id, text);
+//            Log.e(TAG, "insertHistory: " + data.getId() );
+//        } else{
+//
+//        Log.e("TAG", "query successull and available");
+//
+//        }
+//        return data;
+//    }
+
+
     //history insert
-    public Model insertHistory(int id,String text)
+/*    public Model insertHistory(int id,String text)
     {
         Model data = null;
+
         if (id>0) {
 
-            database.execSQL("INSERT INTO history(id, word) VALUES(('" + id + "'),('" + text + "'))");
+            database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
             data = new Model(id, text);
         }
         else
             data = null;
             return data;
 
-    }
+    }*/
+
+
+    //history insert
+//    public Model insertHistory(int id,String text)
+//    {
+//        Model data = null;
+//
+//
+//        Cursor c = database.rawQuery("SELECT _id FROM history where _id =" + id, null);
+//        if (c != null) {
+//            Log.e("TAG", "query successull and available" + id);
+//            data = null;
+//
+//        } else {
+//            Log.e("TAG", "query successull and available" + id);
+//            database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
+//            data = new Model(id, text);
+//        }
+//        Log.e("TAG", "query successull" + c.toString());
+//
+//
+//        return data;
+//
+//    }
+//
+
 
     //history retriving
-/*    public ArrayList<Model> getSearchHistory() throws SQLException {
+    public ArrayList<Model> getSearchHistory() throws SQLException {
         ArrayList<Model> data= new ArrayList<>();
         String query = "SELECT _id,word FROM history";
         Cursor row = database.rawQuery(query, null);
@@ -179,7 +228,7 @@ public class DatabaseAccess {
             row.moveToFirst();
             while(!row.isAfterLast()){
                 int id=row.getInt(row.getColumnIndex("_id"));
-                String word=row.getString(row.getColumnIndex("en_word"));
+                String word=row.getString(row.getColumnIndex("word"));
                 data.add(new Model(id,word));
                 // do what ever you want here
                 row.moveToNext();
@@ -191,7 +240,7 @@ public class DatabaseAccess {
             data=null;
 
         return data;
-    }*/
+    }
 
 
 
