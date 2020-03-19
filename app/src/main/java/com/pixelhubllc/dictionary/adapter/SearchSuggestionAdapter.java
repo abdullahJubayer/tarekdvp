@@ -25,7 +25,6 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
     private ArrayList<Model> words;
     DatabaseAccess databaseAccess;
 
-
     public SearchSuggestionAdapter(Context mContext, ArrayList<Model> words) {
         this.words = words;
         this.context = mContext;
@@ -66,6 +65,7 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
                     Log.d("TAG, ", "onClick: " + word_id);
                     Intent intent = new Intent(context, DetailsActivity.class);
                     intent.putExtra("id", word_id);
+                    intent.putExtra("class", "SearchSuggestionAdapter");
                     context.startActivity(intent);
                 }
             });
@@ -76,5 +76,26 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
         }
 
     }
+
+    public void deleteWordFromHistory(int pos)
+    {
+            //GET ID
+            Log.e("Position",pos+"");
+            Model model=words.get(pos);
+            int id=model.getId();
+            databaseAccess = DatabaseAccess.getInstance(context);
+            databaseAccess.open();
+            if(databaseAccess.delete(id))
+            {
+                words.remove(pos);
+            }else
+            {
+                Toast.makeText(context,"Unable To Delete",Toast.LENGTH_SHORT).show();
+            }
+
+            databaseAccess.close();
+
+            this.notifyItemRemoved(pos);
+        }
 
 }

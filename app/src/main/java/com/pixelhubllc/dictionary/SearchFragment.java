@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pixelhubllc.dictionary.adapter.SearchSuggestionAdapter;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
+import com.pixelhubllc.dictionary.swipe.SwipeHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +33,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView wordIndexList;
     private EditText searchViewEt;
     private static final String TAG = "SearchFragment";
-    ArrayList<Model> data, history;
+    private ArrayList<Model> data, history;
     SearchSuggestionAdapter searchSuggestionAdapter;
 
     Context context;
@@ -51,7 +52,9 @@ public class SearchFragment extends Fragment {
         databaseAccess = DatabaseAccess.getInstance(context);
         databaseAccess.open();
 
-//        history =databaseAccess.getSearchHistory();
+        history = databaseAccess.getSearchHistory();
+
+
 
         searchViewEt = view.findViewById(R.id.searchboxEt);
 
@@ -61,9 +64,14 @@ public class SearchFragment extends Fragment {
 
         wordIndexList.setLayoutManager(new LinearLayoutManager(context));
 
+//        searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(),)
+//        wordIndexList.setAdapter(wordHistory);
+
   /*      searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
         wordIndexList.setAdapter(searchSuggestionAdapter);
         */
+        searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
+        wordIndexList.setAdapter(searchSuggestionAdapter);
 
         searchViewEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +89,8 @@ public class SearchFragment extends Fragment {
                     Log.d("TAG",data.toString());
 
                 } else {
-                    searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), new ArrayList<Model>());
+                    history = databaseAccess.getSearchHistory();
+                    searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                 }
 
@@ -89,7 +98,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                searchSuggestionAdapter.notifyItemChanged(history.size()-1);
             }
         });
 
@@ -101,27 +110,32 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        ItemTouchHelper.Callback callback=new SwipeHelper(searchSuggestionAdapter);
+        ItemTouchHelper helper=new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(wordIndexList);
 
         //this is for remove search element by swipe
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper
-                .SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                                data.remove(viewHolder.getAdapterPosition());
-                searchSuggestionAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-            }
-        });
-                helper.attachToRecyclerView(wordIndexList);
+//        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper
+//                .SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+////                              data.remove(viewHolder.getAdapterPosition());
+//                                history.remove(viewHolder.getAdapterPosition());
+//                searchSuggestionAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+//            }
+//        });
+//                helper.attachToRecyclerView(wordIndexList);
 
         return view;
 
     }
 
+    //keyboard of on
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

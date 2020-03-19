@@ -1,5 +1,6 @@
 package com.pixelhubllc.dictionary.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -158,23 +159,22 @@ public class DatabaseAccess {
     }
 
 
-//    public Model insertHistory(int id,String text)
-//    {
-//        Cursor row = null;
-//        Model data = null;
-//
-//        row = database.rawQuery("SELECT _id FROM history where _id =" + id, null);
-//        if (row==null){
-//            database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
-//            data = new Model(id, text);
-//            Log.e(TAG, "insertHistory: " + data.getId() );
-//        } else{
-//
-//        Log.e("TAG", "query successull and available");
-//
-//        }
-//        return data;
-//    }
+    public long insertHistory(int id,String text)
+    {
+        Cursor row = null;
+
+        row = database.rawQuery("SELECT _id FROM history where _id =" + id, null);
+        if (row.getCount() == 0){
+            //database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
+            ContentValues values=new ContentValues();
+            values.put("_id",id);
+            values.put("word",text);
+            return database.insert("history",null,values);
+
+        } else{
+        return -1;
+        }
+    }
 
 
     //history insert
@@ -243,6 +243,22 @@ public class DatabaseAccess {
     }
 
 
+    //DELETE/REMOVE
+    public boolean delete(int id)
+    {
+        try {
+            int result=database.delete("history","_id "+" =?",new String[]{String.valueOf(id)});
+            if(result>0) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 
     public Cursor getMeaning(String text)
     {
@@ -263,8 +279,8 @@ public class DatabaseAccess {
     }
 
 
-    public void  deleteHistory()
+    public void  deleteHistory(int id)
     {
-        database.execSQL("DELETE  FROM history");
+        database.execSQL("DELETE FROM history WHERE _id = id;");
     }
 }

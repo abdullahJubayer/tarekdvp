@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pixelhubllc.dictionary.adapter.SearchSuggestionAdapter;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
 
@@ -54,12 +55,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent mIntent = getIntent();
         int id = mIntent.getIntExtra("id", 0);
+        String name = mIntent.getStringExtra("class");
         Model model=databaseAccess.fetchdatabyId(id);
 
         //this is for history table
-        String enWords = model.getEn_words();
+        if (name != null && name.equals("SearchSuggestionAdapter")){
+            String enWords = model.getEn_words();
+            long result=databaseAccess.insertHistory(id, enWords);
+            Log.e("Status",result+"");
+        }
 
-//        databaseAccess.insertHistory(id, enWords);
 
 
         wordTv.setText(model.getEn_words());
@@ -71,6 +76,7 @@ public class DetailsActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 onBackPressed();
 
             }
