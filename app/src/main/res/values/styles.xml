@@ -20,4 +20,9 @@
         <item name="colorAccent">#6DEE00</item>
     </style>
 
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

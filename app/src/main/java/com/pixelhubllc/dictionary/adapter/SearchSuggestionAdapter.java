@@ -76,26 +76,26 @@ public class SearchSuggestionAdapter extends RecyclerView.Adapter<SearchSuggesti
         }
 
     }
-
-    public void deleteWordFromHistory(int pos)
-    {
-            //GET ID
-            Log.e("Position",pos+"");
-            Model model=words.get(pos);
-            int id=model.getId();
-            databaseAccess = DatabaseAccess.getInstance(context);
-            databaseAccess.open();
-            if(databaseAccess.delete(id))
-            {
-                words.remove(pos);
-            }else
-            {
-                Toast.makeText(context,"Unable To Delete",Toast.LENGTH_SHORT).show();
-            }
-
-            databaseAccess.close();
-
-            this.notifyItemRemoved(pos);
-        }
+//
+//    public void deleteWordFromHistory(int pos)
+//    {
+//            //GET ID
+//            Log.e("Position",pos+"");
+//            Model model=words.get(pos);
+//            int id=model.getId();
+//            databaseAccess = DatabaseAccess.getInstance(context);
+//            databaseAccess.open();
+//            if(databaseAccess.delete(id))
+//            {
+//                words.remove(pos);
+//            }else
+//            {
+//                Toast.makeText(context,"Unable To Delete",Toast.LENGTH_SHORT).show();
+//            }
+//
+//            databaseAccess.close();
+//
+//            this.notifyItemRemoved(pos);
+//        }
 
 }

@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DetailsActivity extends AppCompatActivity {
     private TextView wordTv;
@@ -23,8 +26,12 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView synonymsTv;
     private TextView antonymsTv;
     private ImageView backBtn;
+    private ImageView bookmarkBtn;
     private static final String TAG = "FragmentActivity";
     private ArrayList<Model> histories;
+    private DatabaseAccess databaseAccess;
+    private Model model;
+    private TextToSpeech tts;
 
 
     @Override
@@ -32,7 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        DatabaseAccess databaseAccess;
+
         databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
         histories = databaseAccess.getSearchHistory();
@@ -51,12 +58,13 @@ public class DetailsActivity extends AppCompatActivity {
         synonymsTv = findViewById(R.id.synonyms_tv);
         antonymsTv = findViewById(R.id.antonyms_tv);
         backBtn =findViewById(R.id.details__back_arrow);
+        bookmarkBtn = findViewById(R.id.details_favourite_iv);
 
 
         Intent mIntent = getIntent();
-        int id = mIntent.getIntExtra("id", 0);
+        final int id = mIntent.getIntExtra("id", 0);
         String name = mIntent.getStringExtra("class");
-        Model model=databaseAccess.fetchdatabyId(id);
+        model=databaseAccess.fetchdatabyId(id);
 
         //this is for history table
         if (name != null && name.equals("SearchSuggestionAdapter")){
@@ -64,7 +72,6 @@ public class DetailsActivity extends AppCompatActivity {
             long result=databaseAccess.insertHistory(id, enWords);
             Log.e("Status",result+"");
         }
-
 
 
         wordTv.setText(model.getEn_words());
@@ -79,6 +86,41 @@ public class DetailsActivity extends AppCompatActivity {
 
                 onBackPressed();
 
+            }
+        });
+
+        bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String enWords = model.getEn_words();
+                long result=databaseAccess.insertBookmark(id, enWords);
+                Toast.makeText(DetailsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ImageView btnSpeak = findViewById(R.id.listen_icon);
+
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tts = new TextToSpeech(DetailsActivity.this, new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        // TODO Auto-generated method stub
+                        if(status == TextToSpeech.SUCCESS){
+                            int result=tts.setLanguage(Locale.getDefault());
+                            if(result==TextToSpeech.LANG_MISSING_DATA || result==TextToSpeech.LANG_NOT_SUPPORTED){
+                                Log.e("error", "This Language is not supported");
+                            }
+                            else{
+                                String enWords = model.getEn_words();
+                                tts.speak(enWords, TextToSpeech.QUEUE_FLUSH, null);
+                            }
+                        }
+                        else
+                            Log.e("error", "Initialization Failed!");
+                    }
+                });
             }
         });
     }

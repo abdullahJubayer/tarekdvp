@@ -243,7 +243,7 @@ public class DatabaseAccess {
     }
 
 
-    //DELETE/REMOVE
+    //DELETE ward from history/REMOVE
     public boolean delete(int id)
     {
         try {
@@ -258,6 +258,63 @@ public class DatabaseAccess {
         return false;
     }
 
+
+    public long insertBookmark(int id,String text)
+    {
+        Cursor row = null;
+
+        row = database.rawQuery("SELECT _id FROM history where _id =" + id, null);
+        if (row.getCount() == 0){
+            //database.execSQL("INSERT INTO history(_id, word) VALUES(('" + id + "'),('" + text + "'))");
+            ContentValues values=new ContentValues();
+            values.put("_id",id);
+            values.put("word",text);
+            return database.insert("bookmark",null,values);
+
+        } else{
+            return -1;
+        }
+    }
+
+
+    //bookmark retriving
+    public ArrayList<Model> getBookmark() throws SQLException {
+        ArrayList<Model> data= new ArrayList<>();
+        String query = "SELECT _id,word FROM bookmark";
+        Cursor row = database.rawQuery(query, null);
+        if (row != null) {
+            row.moveToFirst();
+            while(!row.isAfterLast()){
+                int id=row.getInt(row.getColumnIndex("_id"));
+                String word=row.getString(row.getColumnIndex("word"));
+                data.add(new Model(id,word));
+                // do what ever you want here
+                row.moveToNext();
+            }
+
+            row.close();
+        }
+        else
+            data=null;
+
+        return data;
+    }
+
+
+    //DELETE ward from bookmark
+    public boolean deleteBookmarkWord(int id)
+    {
+        try {
+            int result=database.delete("bookmark","_id "+" =?",new String[]{String.valueOf(id)});
+            if(result>0) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
     public Cursor getMeaning(String text)
@@ -282,5 +339,15 @@ public class DatabaseAccess {
     public void  deleteHistory(int id)
     {
         database.execSQL("DELETE FROM history WHERE _id = id;");
+    }
+
+    public void  deleteAllHistory()
+    {
+        database.execSQL("DELETE  FROM history");
+    }
+
+    public void  deleteAllBookmark()
+    {
+        database.execSQL("DELETE  FROM bookmark");
     }
 }

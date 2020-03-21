@@ -19,22 +19,23 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pixelhubllc.dictionary.adapter.HistoryAdapter;
 import com.pixelhubllc.dictionary.adapter.SearchSuggestionAdapter;
 import com.pixelhubllc.dictionary.database.DatabaseAccess;
 import com.pixelhubllc.dictionary.model.Model;
-import com.pixelhubllc.dictionary.swipe.SwipeHelper;
+import com.pixelhubllc.dictionary.swipe.RecyclerViewSwipeHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SearchFragment extends Fragment {
 
-    DatabaseAccess databaseAccess;
+    private DatabaseAccess databaseAccess;
     private RecyclerView wordIndexList;
     private EditText searchViewEt;
     private static final String TAG = "SearchFragment";
     private ArrayList<Model> data, history;
-    SearchSuggestionAdapter searchSuggestionAdapter;
+    private SearchSuggestionAdapter searchSuggestionAdapter;
+    private HistoryAdapter historyAdapter;
 
     Context context;
 
@@ -49,20 +50,20 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_search,container, false);
 
 
-        databaseAccess = DatabaseAccess.getInstance(context);
-        databaseAccess.open();
-
-        history = databaseAccess.getSearchHistory();
-
-
-
         searchViewEt = view.findViewById(R.id.searchboxEt);
-
         ImageView clearEt = view.findViewById(R.id.clear_et);
 
+        databaseAccess = DatabaseAccess.getInstance(context);
+        databaseAccess.open();
         wordIndexList = view.findViewById(R.id.listview);
-
         wordIndexList.setLayoutManager(new LinearLayoutManager(context));
+
+        history = databaseAccess.getSearchHistory();
+        if (history != null && history.size() !=0){
+            historyAdapter = new HistoryAdapter(getActivity(), history);
+            wordIndexList.setAdapter(historyAdapter);
+        }
+
 
 //        searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(),)
 //        wordIndexList.setAdapter(wordHistory);
@@ -70,8 +71,10 @@ public class SearchFragment extends Fragment {
   /*      searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
         wordIndexList.setAdapter(searchSuggestionAdapter);
         */
-        searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
-        wordIndexList.setAdapter(searchSuggestionAdapter);
+//        searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
+//        wordIndexList.setAdapter(searchSuggestionAdapter);
+
+
 
         searchViewEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,17 +91,18 @@ public class SearchFragment extends Fragment {
                     wordIndexList.setAdapter(searchSuggestionAdapter);
                     Log.d("TAG",data.toString());
 
+
                 } else {
                     history = databaseAccess.getSearchHistory();
-                    searchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), history);
-                    wordIndexList.setAdapter(searchSuggestionAdapter);
+                    historyAdapter = new HistoryAdapter(getActivity(), history);
+                    wordIndexList.setAdapter(historyAdapter);
                 }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchSuggestionAdapter.notifyItemChanged(history.size()-1);
+//                historyAdapter.notifyItemChanged(history.size()-1);
             }
         });
 
@@ -110,7 +114,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        ItemTouchHelper.Callback callback=new SwipeHelper(searchSuggestionAdapter);
+        ItemTouchHelper.Callback callback=new RecyclerViewSwipeHelper(historyAdapter);
         ItemTouchHelper helper=new ItemTouchHelper(callback);
         helper.attachToRecyclerView(wordIndexList);
 
@@ -135,7 +139,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    //keyboard of on
+    //default keyboard of on
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
