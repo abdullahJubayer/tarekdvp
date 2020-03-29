@@ -44,17 +44,21 @@ public class FavouriteFragment extends Fragment {
         bookmarlwordList = view.findViewById(R.id.bookmark_listview);
         bookmarlwordList.setLayoutManager(new LinearLayoutManager(context));
 
+//        ItemTouchHelper.Callback callback=new RecyclerViewSwipeHelper(bookmarkAdapter);
+//        ItemTouchHelper helper=new ItemTouchHelper(callback);
+//        helper.attachToRecyclerView(bookmarlwordList);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         bookmark = databaseAccess.getBookmark();
         if (bookmark != null && bookmark.size() !=0){
             bookmarkAdapter = new BookmarkAdapter(getActivity(), bookmark);
             bookmarlwordList.setAdapter(bookmarkAdapter);
             bookmarkAdapter.notifyDataSetChanged();
         }
-
-//        ItemTouchHelper.Callback callback=new RecyclerViewSwipeHelper(bookmarkAdapter);
-//        ItemTouchHelper helper=new ItemTouchHelper(callback);
-//        helper.attachToRecyclerView(bookmarlwordList);
-
-        return view;
     }
 }
