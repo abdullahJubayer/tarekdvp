@@ -35,7 +35,8 @@ public class SearchFragment extends Fragment {
     private static final String TAG = "SearchFragment";
     private ArrayList<Model> data, history;
     private SearchSuggestionAdapter searchSuggestionAdapter;
-    private HistoryAdapter historyAdapter;
+    private  HistoryAdapter historyAdapter;
+    private ItemTouchHelper.Callback callback;
 
     Context context;
 
@@ -114,7 +115,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        ItemTouchHelper.Callback callback=new RecyclerViewSwipeHelper(historyAdapter);
+        callback=new RecyclerViewSwipeHelper(historyAdapter);
         ItemTouchHelper helper=new ItemTouchHelper(callback);
         helper.attachToRecyclerView(wordIndexList);
 

@@ -3,6 +3,8 @@ package com.pixelhubllc.dictionary.swipe;
 import com.pixelhubllc.dictionary.adapter.BookmarkAdapter;
 import com.pixelhubllc.dictionary.adapter.HistoryAdapter;
 import com.pixelhubllc.dictionary.adapter.SearchSuggestionAdapter;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,20 +30,22 @@ public class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCallback {
 //    }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        adapter.deleteWordFromHistory( viewHolder.getAdapterPosition());
-        adapter.notifyDataSetChanged();
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+        if (adapter != null){
+            adapter.deleteWordFromHistory( viewHolder.getAdapterPosition());
+            adapter.notifyDataSetChanged();
+        }
 //        bookmarkAdapter.deleteWordFromBookmark(viewHolder.getAdapterPosition());
 //        bookmarkAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         if (viewHolder instanceof SearchSuggestionAdapter.ViewHolder) return 0;
         return super.getSwipeDirs(recyclerView, viewHolder);
     }

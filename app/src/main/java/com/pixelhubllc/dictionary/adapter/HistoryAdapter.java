@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<Model> words;
+    private static ArrayList<Model> words;
     DatabaseAccess databaseAccess;
     private static final String TAG = "HistoryAdapter";
 
@@ -81,12 +81,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public void deleteWordFromHistory(int pos)
     {
-            //GET ID
-
+        //GET ID
+        Log.e("Position",pos+"");
+        if (pos<words.size()-1){
             Model model=words.get(pos);
-            Log.e("Position",pos+"");
             int id=model.getId();
-        Log.e(TAG, "deleteWordFromHistory: " + id );
+            Log.e(TAG, "deleteWordFromHistory: " + id );
             databaseAccess = DatabaseAccess.getInstance(context);
             databaseAccess.open();
             if(databaseAccess.delete(id))
@@ -101,6 +101,30 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 //            databaseAccess.close();
 
             this.notifyItemRemoved(pos);
+        }else {
+            if (words.size()==1){
+                Model model=words.get(0);
+                int id=model.getId();
+                Log.e(TAG, "deleteWordFromHistory: " + id );
+                databaseAccess = DatabaseAccess.getInstance(context);
+                databaseAccess.open();
+                if(databaseAccess.delete(id))
+                {
+                    words.remove(0);
+
+                }else
+                {
+                    Toast.makeText(context,"Unable To Delete",Toast.LENGTH_SHORT).show();
+                }
+
+//            databaseAccess.close();
+
+                this.notifyItemRemoved(0);
+            }
         }
+        if (pos == 0 && words.size()==0){
+            words.clear();
+        }
+    }
 
 }
